@@ -17,12 +17,13 @@ char mname[MAXVAL] = "tasks.txt";
 
 typedef struct
 {
-	char *name;
-	char *isdone;
+	char name[MAXVAL];
+	char isdone[MAXVAL];
 	int id;
 } Task;
 
-Task *tsks = malloc(MAXVAL * sizeof(Task));
+Task *tsksar[MAXVAL];
+
 
 /* convert int to char */
 void itoc(int n, char ln[]);
@@ -53,6 +54,8 @@ int main()
 			printf("%s ", buffstat);
 			ctask(buffname, mname, buffstat);
 
+			printf("%s\n", tsksar[0]->name);
+
 
 		}
 	}
@@ -60,10 +63,6 @@ int main()
 
 }
 
-void itoc(int n, char ln[])
-{
-
-}
 
 
 void scancom(char flag[], char name[], char args[], char stat[])
@@ -116,6 +115,13 @@ void scancom(char flag[], char name[], char args[], char stat[])
 
 void ctask(char taskname[], char mainname[],  char vdone[])
 {
+
+	tsksar[taskcount] = (Task *)malloc(sizeof(Task));
+
+	tsksar[taskcount]->id = taskcount;
+	strcpy(tsksar[taskcount]->name, taskname);
+	strcpy(tsksar[taskcount]->isdone, vdone);
+
 	taskcount++;
 
 	FILE *fp;
@@ -128,9 +134,5 @@ void ctask(char taskname[], char mainname[],  char vdone[])
 	fputs("is done: ", fp);
 	fputs(vdone, fp);
 	fputs("\n\n", fp);
-	fclose(fp);
-
-
-
-		
+	fclose(fp);	
 }
