@@ -25,8 +25,6 @@ typedef struct
 Task *tsksar[MAXVAL];
 
 
-/* convert int to char */
-void itoc(int n, char ln[]);
 
 /* Scan a command for arguments */
 void scancom(char flag[], char name[], char args[], char stat[]);
