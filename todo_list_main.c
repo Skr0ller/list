@@ -3,18 +3,35 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
+#include <fcntl.h>
 
+#define PERMS 0644
 #define MAXVAL 30
-#define MAXNAME 20
 #define BUFSIZE 100
 
-int count = 0, j = 0;
+/* task id */
+int taskcount = 0;
+
+/* main name for a file with tasks */
+char mname[MAXVAL] = "tasks.txt"; 
+
+typedef struct
+{
+	char *name;
+	char *isdone;
+	int id;
+} Task;
+
+Task *tsks = malloc(MAXVAL * sizeof(Task));
+
+/* convert int to char */
+void itoc(int n, char ln[]);
 
 /* Scan a command for arguments */
 void scancom(char flag[], char name[], char args[], char stat[]);
 
 /* create a task */
-void ctask(char taskname[MAXNAME], int vdone);
+void ctask(char taskname[], char mainname[], char vdone[]);
 
 int main()
 {
@@ -22,7 +39,7 @@ int main()
 
 	printf("Enter your command\n\n");
 	printf("Example of creating a task: -n nameofyourtask isdone(1 or 0)\n\n");
-	printf(" New task: -n\n Show task: -s\n Delete task -d\n Update task: -u\n Help: -h\n");
+	printf("New task: -n\nShow task: -s\nDelete task -d\nUpdate task: -u\nHelp: -h\n");
 
 	while(1)
 	{
@@ -34,10 +51,17 @@ int main()
 			printf("%s ", buffflag);
 			printf("%s ", buffname);
 			printf("%s ", buffstat);
+			ctask(buffname, mname, buffstat);
+
 
 		}
 	}
 		
+
+}
+
+void itoc(int n, char ln[])
+{
 
 }
 
@@ -90,7 +114,23 @@ void scancom(char flag[], char name[], char args[], char stat[])
 
 }
 
-void ctask(char taskname[], int vdone)
+void ctask(char taskname[], char mainname[],  char vdone[])
 {
+	taskcount++;
 
+	FILE *fp;
+
+	fp = fopen(mainname, "a");
+
+	fputs("task name: ", fp);
+	fputs(taskname, fp);
+	fputs("\n", fp);
+	fputs("is done: ", fp);
+	fputs(vdone, fp);
+	fputs("\n\n", fp);
+	fclose(fp);
+
+
+
+		
 }
