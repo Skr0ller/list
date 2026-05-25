@@ -31,7 +31,7 @@ void helpcom();
 void stask(int tid);
 
 /* Scan a command for arguments */
-void scancom(char flag[], char name[], char args[], char stat[]);
+void scancom(char flag[], char name[], char args[], char stat[], int taskid);
 
 /* Create a task */
 void ctask(char taskname[], char mainname[], char vdone[]);
@@ -49,8 +49,9 @@ int main()
 		if(fgets(argsbuffer, sizeof(argsbuffer), stdin) != NULL)
 		{
 			char buffflag[MAXVAL], buffname[MAXVAL], buffstat[MAXVAL];
+			int tsid = 0;
 
-			scancom(buffflag, buffname, argsbuffer, buffstat);
+			scancom(buffflag, buffname, argsbuffer, buffstat, tsid);
 
 			int b = 0;
 			switch(buffflag[b])
@@ -62,6 +63,10 @@ int main()
 				case 'h':
 					helpcom();
 					break;
+				case 's':
+					stask(tsid);
+					break;
+
 			}
 		}
 	}
@@ -80,7 +85,7 @@ void stask(int tid)
 	printf("name: %s\nis done: %s", tsksar[tid]->name, tsksar[tid]->isdone);
 }
 
-void scancom(char flag[], char name[], char args[], char stat[])
+void scancom(char flag[], char name[], char args[], char stat[], int taskid)
 {
 	int a = 0;
 	int b = 0;
@@ -110,11 +115,16 @@ void scancom(char flag[], char name[], char args[], char stat[])
 	while(args[a] != ' ')
 	{
 		name[c] = args[a];
-		++c, ++a;
+		c++, ++a;
 
 		if(args[a] == ' ')
 		{
 			name[c] = '\0';
+		}
+		if(args[a] == '\0')
+		{
+			name[c] = '\0';
+			return;
 		}
 	}
 	a++;
