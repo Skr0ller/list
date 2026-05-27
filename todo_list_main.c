@@ -28,7 +28,7 @@ Task *tsksar[MAXVAL];
 void helpcom();
 
 /* Show task by id */
-void stask(int tid);
+void stask(char tid[]);
 
 /* Scan a command for arguments */
 void scancom(char flag[], char name[], char args[], char stat[], int taskid);
@@ -64,7 +64,7 @@ int main()
 					helpcom();
 					break;
 				case 's':
-					stask(tsid);
+					stask(buffname);
 					break;
 
 			}
@@ -80,12 +80,13 @@ void helpcom()
 			" Delete a task command: -d id_of_your_task\n Update a task command: -u id_of_a_task new_name_for_a_task new_status_for_a_task\n");
 }
 
-void stask(int tid)
+void stask(char tid[])
 {
-	printf("name: %s\nis done: %s", tsksar[tid]->name, tsksar[tid]->isdone);
+	int b = tid[0] - '0';
+	printf("name: %s\nis done: %s", tsksar[b]->name, tsksar[b]->isdone);
 }
 
-void scancom(char flag[], char name[], char args[], char stat[], int taskid)
+void scancom(char flag[], char name[], char args[], char stat[], int taskidi)
 {
 	int a = 0;
 	int b = 0;
