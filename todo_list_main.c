@@ -92,6 +92,15 @@ void stask(char tid[])
 	{
 		b = tid[0] - '0';
 	}
+
+	if(b > taskcount || b > 30)
+	{
+		printf("Such task doesn't exist");
+	}
+	else
+	{
+		printf("name: %s\nis done: %s", tsksar[b]->name, tsksar[b]->isdone);
+	}
 }
 
 void scancom(char flag[], char name[], char args[], char stat[], int taskidi)
