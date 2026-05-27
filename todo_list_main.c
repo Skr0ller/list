@@ -58,7 +58,7 @@ int main()
 			{
 				case 'n':
 					ctask(buffname, mname, buffstat);
-					printf("Task have been created!");
+					printf("Task have been created!\n");
 					break;
 				case 'h':
 					helpcom();
@@ -82,8 +82,16 @@ void helpcom()
 
 void stask(char tid[])
 {
-	int b = tid[0] - '0';
-	printf("name: %s\nis done: %s", tsksar[b]->name, tsksar[b]->isdone);
+	int b;
+
+	if(strlen(tid) > 1)
+	{
+		b = (tid[0] - '0') * 10 + (tid[1] - '0');
+	}
+	else
+	{
+		b = tid[0] - '0';
+	}
 }
 
 void scancom(char flag[], char name[], char args[], char stat[], int taskidi)
@@ -151,6 +159,8 @@ void ctask(char taskname[], char mainname[],  char vdone[])
 	tsksar[taskcount]->id = taskcount;
 	strcpy(tsksar[taskcount]->name, taskname);
 	strcpy(tsksar[taskcount]->isdone, vdone);
+
+
 
 	taskcount++;
 
