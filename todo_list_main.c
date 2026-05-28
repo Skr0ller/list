@@ -27,11 +27,14 @@ Task *tsksar[MAXVAL];
 /* Help command */
 void helpcom();
 
+/* update a command */
+void update(char tskid[], char newname[], char newstatus[]);
+
 /* Show task by id */
 void stask(char tid[]);
 
 /* Scan a command for arguments */
-void scancom(char flag[], char name[], char args[], char stat[], int taskid);
+void scancom(char flag[], char name[], char args[], char stat[]);
 
 /* Create a task */
 void ctask(char taskname[], char mainname[], char vdone[]);
@@ -43,15 +46,14 @@ int main()
 	printf("Enter your command\n\n");
 	printf("Example of creating a task: -n nameofyourtask isdone(1 or 0)\n\n");
 	printf("New task: -n\nShow task: -s\nDelete task -d\nUpdate task: -u\nHelp: -h\n");
-
+ 
 	while(1)
 	{
 		if(fgets(argsbuffer, sizeof(argsbuffer), stdin) != NULL)
 		{
 			char buffflag[MAXVAL], buffname[MAXVAL], buffstat[MAXVAL];
-			int tsid = 0;
 
-			scancom(buffflag, buffname, argsbuffer, buffstat, tsid);
+			scancom(buffflag, buffname, argsbuffer, buffstat);
 
 			int b = 0;
 			switch(buffflag[b])
@@ -59,6 +61,7 @@ int main()
 				case 'n':
 					ctask(buffname, mname, buffstat);
 					printf("Task have been created!\n");
+					printf("Task id: %d\n", taskcount);
 					break;
 				case 'h':
 					helpcom();
@@ -66,11 +69,13 @@ int main()
 				case 's':
 					stask(buffname);
 					break;
-
 			}
 		}
 	}
-		
+}
+
+void update(char tskid[], char newname[], char newstatus[])
+{
 
 }
 
@@ -82,9 +87,9 @@ void helpcom()
 
 void stask(char tid[])
 {
-	int b;
+	int b = 0;
 
-	if(strlen(tid) > 1)
+	if(strlen(tid) > 2)
 	{
 		b = (tid[0] - '0') * 10 + (tid[1] - '0');
 	}
@@ -95,7 +100,7 @@ void stask(char tid[])
 
 	if(b > taskcount || b > 30)
 	{
-		printf("Such task doesn't exist");
+		printf("Such task doesn't exist\n");
 	}
 	else
 	{
@@ -103,7 +108,7 @@ void stask(char tid[])
 	}
 }
 
-void scancom(char flag[], char name[], char args[], char stat[], int taskidi)
+void scancom(char flag[], char name[], char args[], char stat[])
 {
 	int a = 0;
 	int b = 0;
@@ -157,7 +162,6 @@ void scancom(char flag[], char name[], char args[], char stat[], int taskidi)
 			stat[d] = '\0';
 		}
 	}
-
 }
 
 void ctask(char taskname[], char mainname[],  char vdone[])
@@ -168,8 +172,6 @@ void ctask(char taskname[], char mainname[],  char vdone[])
 	tsksar[taskcount]->id = taskcount;
 	strcpy(tsksar[taskcount]->name, taskname);
 	strcpy(tsksar[taskcount]->isdone, vdone);
-
-
 
 	taskcount++;
 
