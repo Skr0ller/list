@@ -1,6 +1,6 @@
 #include <unistd.h>
 #include <stdio.h>
-#include "../include/task.h"
+#include "include/task.h"
 
 int main()
 {
