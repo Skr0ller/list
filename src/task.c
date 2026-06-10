@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
-#include "../include/task.h"
+#include "include/task.h"
 
 Task *taskcount[MAXVAL];
 int taskcount = 0;
